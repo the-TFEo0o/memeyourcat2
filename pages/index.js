@@ -33,7 +33,7 @@ export default function Home() {
     }
 
     try {
-      const res = await fetch("URL_N8N_PAR_HTTP", {
+      const res = await fetch("https://theoia2.app.n8n.cloud/webhook-test/upload", {
         method: "POST",
         body: formData,
       });
