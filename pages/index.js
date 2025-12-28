@@ -1,21 +1,24 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-const catBackgrounds = [
-  "https://placekitten.com/1200/800",
+// Images memes pour le décor
+const sideCats = [
   "https://cataas.com/cat/cute",
-  "https://cataas.com/cat/sleepy",
+  "https://cataas.com/cat/silly",
   "https://cataas.com/cat/funny",
   "https://cataas.com/cat/angry",
 ];
-
-function getRandomBackground() {
-  return catBackgrounds[Math.floor(Math.random() * catBackgrounds.length)];
-}
 
 export default function Home() {
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [resultImage, setResultImage] = useState(null);
   const [loading, setLoading] = useState(false);
+
+  // Pour animation simple des images latérales
+  const [offset, setOffset] = useState(0);
+  useEffect(() => {
+    const interval = setInterval(() => setOffset((prev) => (prev + 1) % 20), 100);
+    return () => clearInterval(interval);
+  }, []);
 
   const handleFileChange = (e) => {
     setSelectedFiles(e.target.files);
@@ -56,45 +59,48 @@ export default function Home() {
     <div
       style={{
         minHeight: "100vh",
-        backgroundColor: "#ffebf0",
+        backgroundColor: "#6b4f3b", // marron foncé
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        justifyContent: "flex-start",
         padding: "50px 20px",
         fontFamily: "'Comic Neue', cursive",
-        overflowX: "hidden",
+        position: "relative",
+        overflow: "hidden",
       }}
     >
-      {/* Header animé avec chat background */}
-      <div
+      {/* Images latérales dynamiques */}
+      {sideCats.map((src, idx) => (
+        <img
+          key={idx}
+          src={src}
+          alt="side cat"
+          style={{
+            position: "absolute",
+            top: `${50 + idx * 150 + offset}px`,
+            left: idx % 2 === 0 ? "-100px" : "calc(100% - 100px)",
+            width: "100px",
+            height: "100px",
+            objectFit: "cover",
+            borderRadius: "15px",
+            opacity: 0.8,
+            transform: `rotate(${idx % 2 === 0 ? offset : -offset}deg)`,
+            transition: "transform 0.2s",
+          }}
+        />
+      ))}
+
+      {/* Titre principal */}
+      <h1
         style={{
-          display: "flex",
-          flexWrap: "wrap",
-          gap: "10px",
-          justifyContent: "center",
+          fontSize: "4rem",
+          color: "#ff0000",
+          textShadow: "3px 3px 6px #000",
           marginBottom: "40px",
+          textAlign: "center",
         }}
       >
-        {Array.from({ length: 6 }).map((_, i) => (
-          <img
-            key={i}
-            src={getRandomBackground()}
-            alt="cat meme"
-            style={{
-              width: "180px",
-              height: "180px",
-              objectFit: "cover",
-              borderRadius: "15px",
-              boxShadow: "0 4px 15px rgba(0,0,0,0.3)",
-              transform: `rotate(${Math.random() * 10 - 5}deg)`,
-            }}
-          />
-        ))}
-      </div>
-
-      <h1 style={{ fontSize: "3rem", color: "#ff3c96", textShadow: "2px 2px 5px #000" }}>
-        Meme You'r Cat 😹
+        MEME YOU'R CAT
       </h1>
 
       {/* Formulaire upload */}
@@ -122,7 +128,7 @@ export default function Home() {
             borderRadius: "12px",
             border: "none",
             cursor: "pointer",
-            background: "#ffe0f0",
+            background: "#f0d6c1",
             fontWeight: "bold",
           }}
         />
@@ -131,10 +137,10 @@ export default function Home() {
           disabled={loading}
           style={{
             padding: "12px 30px",
-            fontSize: "1.2rem",
+            fontSize: "1.5rem",
             borderRadius: "12px",
             border: "none",
-            background: "linear-gradient(90deg,#ff3c96,#ff8fc5)",
+            background: "linear-gradient(90deg,#ff0000,#ff6b6b)",
             color: "#fff",
             cursor: "pointer",
             fontWeight: "bold",
@@ -161,7 +167,7 @@ export default function Home() {
             boxShadow: "0 8px 25px rgba(0,0,0,0.3)",
           }}
         >
-          <h2 style={{ marginBottom: "20px", color: "#ff3c96" }}>Résultat du meme 😸</h2>
+          <h2 style={{ marginBottom: "20px", color: "#ff0000" }}>Résultat du meme</h2>
           <img
             src={resultImage}
             alt="Résultat"
