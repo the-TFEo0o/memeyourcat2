@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 
+// Chats latéraux
 const sideCats = [
   "https://cataas.com/cat/cute",
   "https://cataas.com/cat/silly",
@@ -52,10 +53,9 @@ export default function Home() {
   return (
     <div
       style={{
+        position: "relative",
         minHeight: "100vh",
         width: "100vw",
-        backgroundColor: "#6b4f3b", // fond marron rempli toute la page
-        position: "relative",
         overflow: "visible",
         fontFamily: "'Comic Neue', cursive",
       }}
@@ -69,8 +69,8 @@ export default function Home() {
           style={{
             position: "fixed",
             top: `${100 + idx * 180 + offset}px`,
-            left: idx % 2 === 0 ? "20px" : "auto",   // écart du côté gauche
-            right: idx % 2 !== 0 ? "20px" : "auto",  // écart du côté droit
+            left: idx % 2 === 0 ? "20px" : "auto",
+            right: idx % 2 !== 0 ? "20px" : "auto",
             width: "150px",
             height: "150px",
             objectFit: "cover",
@@ -82,7 +82,7 @@ export default function Home() {
         />
       ))}
 
-      {/* Contenu principal */}
+      {/* Contenu central */}
       <div
         style={{
           display: "flex",
@@ -180,6 +180,15 @@ export default function Home() {
           </div>
         )}
       </div>
+
+      {/* Fond marron sur toute la page */}
+      <style jsx global>{`
+        html, body {
+          height: 100%;
+          margin: 0;
+          background-color: #6b4f3b;
+        }
+      `}</style>
     </div>
   );
 }
