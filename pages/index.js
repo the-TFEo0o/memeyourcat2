@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 
-// Images memes pour le décor
+// Images memes pour les côtés
 const sideCats = [
   "https://cataas.com/cat/cute",
   "https://cataas.com/cat/silly",
   "https://cataas.com/cat/funny",
   "https://cataas.com/cat/angry",
+  "https://cataas.com/cat/sleepy",
 ];
 
 export default function Home() {
@@ -13,7 +14,7 @@ export default function Home() {
   const [resultImage, setResultImage] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  // Pour animation simple des images latérales
+  // Animation simple des images latérales
   const [offset, setOffset] = useState(0);
   useEffect(() => {
     const interval = setInterval(() => setOffset((prev) => (prev + 1) % 20), 100);
@@ -59,6 +60,7 @@ export default function Home() {
     <div
       style={{
         minHeight: "100vh",
+        width: "100vw",
         backgroundColor: "#6b4f3b", // marron foncé
         display: "flex",
         flexDirection: "column",
@@ -66,7 +68,8 @@ export default function Home() {
         padding: "50px 20px",
         fontFamily: "'Comic Neue', cursive",
         position: "relative",
-        overflow: "hidden",
+        overflowX: "hidden",
+        overflowY: "auto",
       }}
     >
       {/* Images latérales dynamiques */}
@@ -77,13 +80,13 @@ export default function Home() {
           alt="side cat"
           style={{
             position: "absolute",
-            top: `${50 + idx * 150 + offset}px`,
-            left: idx % 2 === 0 ? "-100px" : "calc(100% - 100px)",
-            width: "100px",
-            height: "100px",
+            top: `${100 + idx * 180 + offset}px`,
+            left: idx % 2 === 0 ? "-150px" : "calc(100% - 150px)",
+            width: "150px",
+            height: "150px",
             objectFit: "cover",
             borderRadius: "15px",
-            opacity: 0.8,
+            opacity: 0.9,
             transform: `rotate(${idx % 2 === 0 ? offset : -offset}deg)`,
             transition: "transform 0.2s",
           }}
@@ -93,10 +96,10 @@ export default function Home() {
       {/* Titre principal */}
       <h1
         style={{
-          fontSize: "4rem",
+          fontSize: "5rem",
           color: "#ff0000",
-          textShadow: "3px 3px 6px #000",
-          marginBottom: "40px",
+          textShadow: "4px 4px 8px #000",
+          marginBottom: "50px",
           textAlign: "center",
         }}
       >
@@ -109,13 +112,13 @@ export default function Home() {
         style={{
           marginTop: "30px",
           background: "rgba(255,255,255,0.2)",
-          backdropFilter: "blur(10px)",
-          padding: "30px",
-          borderRadius: "20px",
+          backdropFilter: "blur(12px)",
+          padding: "35px",
+          borderRadius: "25px",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          boxShadow: "0 8px 25px rgba(0,0,0,0.3)",
+          boxShadow: "0 10px 30px rgba(0,0,0,0.4)",
         }}
       >
         <input
@@ -123,9 +126,9 @@ export default function Home() {
           multiple
           onChange={handleFileChange}
           style={{
-            marginBottom: "20px",
-            padding: "10px",
-            borderRadius: "12px",
+            marginBottom: "25px",
+            padding: "12px",
+            borderRadius: "15px",
             border: "none",
             cursor: "pointer",
             background: "#f0d6c1",
@@ -136,18 +139,18 @@ export default function Home() {
           type="submit"
           disabled={loading}
           style={{
-            padding: "12px 30px",
-            fontSize: "1.5rem",
-            borderRadius: "12px",
+            padding: "15px 35px",
+            fontSize: "1.6rem",
+            borderRadius: "15px",
             border: "none",
             background: "linear-gradient(90deg,#ff0000,#ff6b6b)",
             color: "#fff",
             cursor: "pointer",
             fontWeight: "bold",
             transition: "0.3s",
-            boxShadow: "0 4px 15px rgba(0,0,0,0.3)",
+            boxShadow: "0 5px 20px rgba(0,0,0,0.4)",
           }}
-          onMouseOver={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
+          onMouseOver={(e) => (e.currentTarget.style.transform = "scale(1.08)")}
           onMouseOut={(e) => (e.currentTarget.style.transform = "scale(1)")}
         >
           {loading ? "Envoi..." : "Créer le meme"}
@@ -158,20 +161,24 @@ export default function Home() {
       {resultImage && (
         <div
           style={{
-            marginTop: "40px",
+            marginTop: "50px",
             textAlign: "center",
             background: "rgba(255,255,255,0.2)",
-            backdropFilter: "blur(10px)",
-            padding: "25px",
-            borderRadius: "20px",
-            boxShadow: "0 8px 25px rgba(0,0,0,0.3)",
+            backdropFilter: "blur(12px)",
+            padding: "30px",
+            borderRadius: "25px",
+            boxShadow: "0 10px 30px rgba(0,0,0,0.4)",
           }}
         >
-          <h2 style={{ marginBottom: "20px", color: "#ff0000" }}>Résultat du meme</h2>
+          <h2 style={{ marginBottom: "25px", color: "#ff0000" }}>Résultat du meme</h2>
           <img
             src={resultImage}
             alt="Résultat"
-            style={{ maxWidth: "100%", borderRadius: "15px", boxShadow: "0 4px 15px rgba(0,0,0,0.3)" }}
+            style={{
+              maxWidth: "100%",
+              borderRadius: "20px",
+              boxShadow: "0 5px 20px rgba(0,0,0,0.4)",
+            }}
           />
         </div>
       )}
