@@ -1,5 +1,17 @@
 import { useState } from "react";
 
+const catBackgrounds = [
+  "https://placekitten.com/1200/800",
+  "https://cataas.com/cat/cute",
+  "https://cataas.com/cat/sleepy",
+  "https://cataas.com/cat/funny",
+  "https://cataas.com/cat/angry",
+];
+
+function getRandomBackground() {
+  return catBackgrounds[Math.floor(Math.random() * catBackgrounds.length)];
+}
+
 export default function Home() {
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [resultImage, setResultImage] = useState(null);
@@ -44,29 +56,60 @@ export default function Home() {
     <div
       style={{
         minHeight: "100vh",
-        background: "url('https://placekitten.com/1200/800') no-repeat center/cover",
+        backgroundColor: "#ffebf0",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        justifyContent: "center",
-        color: "#fff",
-        textShadow: "2px 2px 4px #000",
-        fontFamily: "'Comic Sans MS', sans-serif",
-        padding: "20px",
-        boxSizing: "border-box",
+        justifyContent: "flex-start",
+        padding: "50px 20px",
+        fontFamily: "'Comic Neue', cursive",
+        overflowX: "hidden",
       }}
     >
-      <h1 style={{ fontSize: "3rem", marginBottom: "20px" }}>Meme You'r Cat 😺</h1>
+      {/* Header animé avec chat background */}
+      <div
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          gap: "10px",
+          justifyContent: "center",
+          marginBottom: "40px",
+        }}
+      >
+        {Array.from({ length: 6 }).map((_, i) => (
+          <img
+            key={i}
+            src={getRandomBackground()}
+            alt="cat meme"
+            style={{
+              width: "180px",
+              height: "180px",
+              objectFit: "cover",
+              borderRadius: "15px",
+              boxShadow: "0 4px 15px rgba(0,0,0,0.3)",
+              transform: `rotate(${Math.random() * 10 - 5}deg)`,
+            }}
+          />
+        ))}
+      </div>
 
+      <h1 style={{ fontSize: "3rem", color: "#ff3c96", textShadow: "2px 2px 5px #000" }}>
+        Meme You'r Cat 😹
+      </h1>
+
+      {/* Formulaire upload */}
       <form
         onSubmit={handleSubmit}
         style={{
-          background: "rgba(0,0,0,0.5)",
-          padding: "20px",
-          borderRadius: "15px",
+          marginTop: "30px",
+          background: "rgba(255,255,255,0.2)",
+          backdropFilter: "blur(10px)",
+          padding: "30px",
+          borderRadius: "20px",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
+          boxShadow: "0 8px 25px rgba(0,0,0,0.3)",
         }}
       >
         <input
@@ -74,47 +117,55 @@ export default function Home() {
           multiple
           onChange={handleFileChange}
           style={{
-            marginBottom: "15px",
+            marginBottom: "20px",
             padding: "10px",
-            borderRadius: "10px",
+            borderRadius: "12px",
             border: "none",
             cursor: "pointer",
+            background: "#ffe0f0",
+            fontWeight: "bold",
           }}
         />
         <button
           type="submit"
           disabled={loading}
           style={{
-            padding: "10px 20px",
+            padding: "12px 30px",
             fontSize: "1.2rem",
-            borderRadius: "10px",
+            borderRadius: "12px",
             border: "none",
-            background: "#ff4081",
+            background: "linear-gradient(90deg,#ff3c96,#ff8fc5)",
             color: "#fff",
             cursor: "pointer",
             fontWeight: "bold",
             transition: "0.3s",
+            boxShadow: "0 4px 15px rgba(0,0,0,0.3)",
           }}
+          onMouseOver={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
+          onMouseOut={(e) => (e.currentTarget.style.transform = "scale(1)")}
         >
-          {loading ? "Envoi..." : "Envoyer les memes"}
+          {loading ? "Envoi..." : "Créer le meme"}
         </button>
       </form>
 
+      {/* Résultat */}
       {resultImage && (
         <div
           style={{
-            marginTop: "30px",
+            marginTop: "40px",
             textAlign: "center",
-            background: "rgba(0,0,0,0.5)",
-            padding: "20px",
-            borderRadius: "15px",
+            background: "rgba(255,255,255,0.2)",
+            backdropFilter: "blur(10px)",
+            padding: "25px",
+            borderRadius: "20px",
+            boxShadow: "0 8px 25px rgba(0,0,0,0.3)",
           }}
         >
-          <h2 style={{ marginBottom: "15px" }}>Résultat du meme :</h2>
+          <h2 style={{ marginBottom: "20px", color: "#ff3c96" }}>Résultat du meme 😸</h2>
           <img
             src={resultImage}
             alt="Résultat"
-            style={{ maxWidth: "100%", borderRadius: "10px" }}
+            style={{ maxWidth: "100%", borderRadius: "15px", boxShadow: "0 4px 15px rgba(0,0,0,0.3)" }}
           />
         </div>
       )}
